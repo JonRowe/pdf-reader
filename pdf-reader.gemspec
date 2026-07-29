@@ -36,7 +36,6 @@ Gem::Specification.new do |spec|
 
   # v2.0.0 has some encoding issues with binary data
   spec.add_dependency('Ascii85', '>= 1.0', '< 3.0', '!= 2.0.0')
-  spec.add_dependency('ruby-rc4')
   spec.add_dependency('hashery', '~> 2.0')
   spec.add_dependency('ttfunk')
   spec.add_dependency('afm', '>= 0.2.1', '< 2')
