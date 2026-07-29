@@ -25,6 +25,10 @@ describe PDF::Reader::Rc4 do
       expect(result.unpack1("H*")).to eq("45a01f645fc35b383552544b9bf5")
     end
 
+    it "raises ArgumentError instead of ZeroDivisionError for an empty key" do
+      expect { PDF::Reader::Rc4.new("") }.to raise_error(ArgumentError, "key must not be empty")
+    end
+
     it "is symmetric - decrypting the ciphertext returns the original plaintext" do
       plaintext = "Plaintext"
       ciphertext = PDF::Reader::Rc4.new("Key").decrypt(plaintext)

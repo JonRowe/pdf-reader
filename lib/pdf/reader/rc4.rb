@@ -10,6 +10,8 @@ class PDF::Reader
   class Rc4 #:nodoc:
     #: (String) -> void
     def initialize(key)
+      raise ArgumentError, "key must not be empty" if key.empty?
+
       @key = key.bytes
       @s = (0..255).to_a
       j = 0
