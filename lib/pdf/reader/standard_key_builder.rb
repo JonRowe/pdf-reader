@@ -91,18 +91,21 @@ class PDF::Reader
     #
     #: (String) -> String?
     def auth_owner_pass(pass)
+      owner_key = @owner_key
+      raise MalformedPDFError, "encrypted PDF is missing an owner key" if owner_key.nil?
+
       md5 = Digest::MD5.digest(pad_pass(pass))
       if @revision > 2 then
         50.times { md5 = Digest::MD5.digest(md5) }
         keyBegins = md5[0, @key_length]
         #first iteration decrypt owner_key
-        out = @owner_key
+        out = owner_key
         #RC4 keyed with (keyBegins XOR with iteration #) to decrypt previous out
         19.downto(0).each { |i|
           out = Rc4.new(xor_each_byte(keyBegins,i)).decrypt(out)
         }
       else
-        out = Rc4.new( md5[0, 5] ).decrypt( @owner_key )
+        out = Rc4.new( md5[0, 5] ).decrypt( owner_key )
       end
       # c) check output as user password
       auth_user_pass( out )
