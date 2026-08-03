@@ -8,19 +8,19 @@ describe PDF::Reader::Rc4 do
     it "matches the 'Key'/'Plaintext' test vector" do
       rc4 = PDF::Reader::Rc4.new("Key")
       result = rc4.decrypt("Plaintext")
-      expect(result.unpack1("H*")).to eq("bbf316e8d940af0ad3")
+      expect(result.unpack("H*")[0]).to eq("bbf316e8d940af0ad3")
     end
 
     it "matches the 'Wiki'/'pedia' test vector" do
       rc4 = PDF::Reader::Rc4.new("Wiki")
       result = rc4.decrypt("pedia")
-      expect(result.unpack1("H*")).to eq("1021bf0420")
+      expect(result.unpack("H*")[0]).to eq("1021bf0420")
     end
 
     it "matches the 'Secret'/'Attack at dawn' test vector" do
       rc4 = PDF::Reader::Rc4.new("Secret")
       result = rc4.decrypt("Attack at dawn")
-      expect(result.unpack1("H*")).to eq("45a01f645fc35b383552544b9bf5")
+      expect(result.unpack("H*")[0]).to eq("45a01f645fc35b383552544b9bf5")
     end
 
     it "raises ArgumentError instead of ZeroDivisionError for an empty key" do

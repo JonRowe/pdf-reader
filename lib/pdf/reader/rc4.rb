@@ -26,7 +26,7 @@ class PDF::Reader
     # RC4 encryption and decryption are the same operation (XOR with the keystream).
     #: (String) -> String
     def decrypt(data)
-      out = String.new(encoding: ::Encoding::ASCII_8BIT)
+      out = "".b
       data = data.dup.force_encoding(::Encoding::ASCII_8BIT)
       data.each_byte do |byte|
         @i = (@i + 1) & 0xFF
